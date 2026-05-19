@@ -9,7 +9,7 @@ const app = express();
 
 
 // ======================
-// Database Connection
+// Connect Database
 // ======================
 
 connectDB();
@@ -45,27 +45,14 @@ app.get("/", (req, res) => {
 
 
 // ======================
-// Routes
+// API Routes
 // ======================
 
 app.use("/", userRoutes);
 
 
 // ======================
-// Error Handling
-// ======================
-
-app.use((err, req, res, next) => {
-  console.log(err);
-
-  res.status(500).json({
-    message: "Server Error",
-  });
-});
-
-
-// ======================
-// Server Start
+// Start Server
 // ======================
 
 const PORT = process.env.PORT || 5000;
