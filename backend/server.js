@@ -1,5 +1,4 @@
 const express = require("express");
-
 const cors = require("cors");
 
 require("dotenv").config();
@@ -12,7 +11,6 @@ const app = express();
 
 connectDB();
 
-// app.use(cors());
 app.use(
   cors({
     origin: "https://loginsignup-form-seven.vercel.app",
@@ -22,7 +20,6 @@ app.use(
   })
 );
 
-app.options("*", cors());
 app.use(express.json());
 
 app.use("/", userRoutes);
@@ -30,7 +27,5 @@ app.use("/", userRoutes);
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-
   console.log(`Server Running On Port ${PORT}`);
-
 });
