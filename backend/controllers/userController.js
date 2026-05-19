@@ -10,22 +10,27 @@ const jwt = require("jsonwebtoken");
 // ======================
 
 const registerUser = async (req, res) => {
+
   try {
 
     const { name, email, pass } = req.body;
 
     if (!name || !email || !pass) {
+
       return res.status(400).json({
         message: "All fields are required",
       });
+
     }
 
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
+
       return res.status(400).json({
         message: "User already exists",
       });
+
     }
 
     const hashedPassword = await bcrypt.hash(pass, 10);
@@ -37,6 +42,14 @@ const registerUser = async (req, res) => {
     });
 
     await newUser.save();
+
+    if (!process.env.JWT_SECRET) {
+
+      return res.status(500).json({
+        message: "JWT_SECRET missing",
+      });
+
+    }
 
     const token = jwt.sign(
       {
@@ -60,7 +73,9 @@ const registerUser = async (req, res) => {
     res.status(500).json({
       message: "Server Error",
     });
+
   }
+
 };
 
 
@@ -69,30 +84,45 @@ const registerUser = async (req, res) => {
 // ======================
 
 const loginUser = async (req, res) => {
+
   try {
 
     const { email, pass } = req.body;
 
     if (!email || !pass) {
+
       return res.status(400).json({
         message: "All fields are required",
       });
+
     }
 
     const user = await User.findOne({ email });
 
     if (!user) {
+
       return res.status(400).json({
         message: "User not found",
       });
+
     }
 
     const isMatch = await bcrypt.compare(pass, user.pass);
 
     if (!isMatch) {
+
       return res.status(400).json({
         message: "Invalid Password",
       });
+
+    }
+
+    if (!process.env.JWT_SECRET) {
+
+      return res.status(500).json({
+        message: "JWT_SECRET missing",
+      });
+
     }
 
     const token = jwt.sign(
@@ -117,7 +147,9 @@ const loginUser = async (req, res) => {
     res.status(500).json({
       message: "Server Error",
     });
+
   }
+
 };
 
 
@@ -126,6 +158,7 @@ const loginUser = async (req, res) => {
 // ======================
 
 const getUsers = async (req, res) => {
+
   try {
 
     const users = await User.find().select("-pass");
@@ -139,7 +172,9 @@ const getUsers = async (req, res) => {
     res.status(500).json({
       message: "Server Error",
     });
+
   }
+
 };
 
 

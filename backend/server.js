@@ -27,9 +27,7 @@ app.use(
       "https://loginsignup-form-seven.vercel.app",
       "http://localhost:5173",
     ],
-
     methods: ["GET", "POST", "PUT", "DELETE"],
-
     credentials: true,
   })
 );
@@ -45,7 +43,7 @@ app.get("/", (req, res) => {
 
 
 // ======================
-// API Routes
+// Routes
 // ======================
 
 app.use("/", userRoutes);
