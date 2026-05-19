@@ -12,13 +12,19 @@ const app = express();
 
 connectDB();
 
-app.use(cors());
-
+// app.use(cors());
+app.use(
+  cors({
+    origin: "https://loginsignup-form-seven.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 app.use("/", userRoutes);
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
 
