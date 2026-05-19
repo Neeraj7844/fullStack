@@ -16,10 +16,13 @@ connectDB();
 app.use(
   cors({
     origin: "https://loginsignup-form-seven.vercel.app",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
+
+app.options("*", cors());
 app.use(express.json());
 
 app.use("/", userRoutes);
